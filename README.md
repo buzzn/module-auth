@@ -36,7 +36,7 @@ How to use this module in app:
 ```
 "@buzzn/module_powertaker_form": "git+https://github.com/buzzn/module-powertaker-form.git#v1.0.2"
 ```
-- add Auth reducers in app reducers:
+- add Auth reducers to app reducers:
 ```
 import { combineReducers } from 'redux';
 import Auth from '@buzzn/module_auth';
@@ -58,5 +58,5 @@ function* rootSaga() {
   sagaMiddleware.run(rootSaga);
 // ...
 ```
-- listen to Auth.constants.SIGN_IN and Auth.constants.SIGN_OUT actions when needed
+- listen for Auth.constants.SIGN_IN and Auth.constants.SIGN_OUT actions when needed
 - add Auth react components to UI (if needed): Auth.PasswordSignIn, Auth.RefreshButton, Auth.SignOutButton
