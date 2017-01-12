@@ -187,6 +187,8 @@ describe('auth sagas', () => {
     const apiUrl = 'url';
     const clientId = 'id';
     const token = '*****';
+    const scope = 'full';
+    const callBackURL = 'http://localhost/';
 
     it('should get api params', () => {
       expect(generator.next().value)
@@ -194,8 +196,8 @@ describe('auth sagas', () => {
     });
 
     it('should call api.implicitAuthorize with api params', () => {
-      expect(generator.next({ apiUrl, clientId }).value)
-      .to.eql(call(api.implicitAuthorize, { apiUrl, clientId }));
+      expect(generator.next({ apiUrl, clientId, scope, callBackURL }).value)
+      .to.eql(call(api.implicitAuthorize, { apiUrl, clientId, scope, callBackURL }));
     });
 
     it('should save tokens to localStorage', () => {
