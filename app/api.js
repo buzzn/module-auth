@@ -102,10 +102,10 @@ export default {
       return refresh(refreshToken);
     }
   },
-  implicitAuthorize: ({ apiUrl, clientId }) => {
+  implicitAuthorize: ({ apiUrl, clientId, scope, callBackURL }) => {
     localApiUrl = apiUrl;
     localClientId = clientId;
-    const popup = openPopup(`${localApiUrl}/oauth/authorize?client_id=${localClientId}&redirect_uri=${document.URL}&response_type=token`);
+    const popup = openPopup(`${localApiUrl}/oauth/authorize?client_id=${localClientId}&redirect_uri=${callBackURL}&scope=${scope}&response_type=token`);
     return listenPopup(popup);
   },
 };

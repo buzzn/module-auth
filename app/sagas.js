@@ -24,8 +24,8 @@ export function* passwordAuthorize({ oldRefreshToken, username, password }) {
 
 export function* implicitAuthorize() {
   try {
-    const { apiUrl, clientId } = yield select(getConfig);
-    const { token } = yield call(api.implicitAuthorize, { apiUrl, clientId });
+    const { apiUrl, clientId, scope, callBackURL } = yield select(getConfig);
+    const { token } = yield call(api.implicitAuthorize, { apiUrl, clientId, scope, callBackURL });
     yield call(api.setAuthTokens, { token });
     yield put(actions.authorizeSuccess(token));
     return null;
