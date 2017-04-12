@@ -68,7 +68,7 @@ function getToken({ username, password }) {
     fetch(`${localApiUrl}oauth/token`, {
       method: 'POST',
       headers: prepareHeaders(),
-      body: JSON.stringify({ grant_type: 'password', scope: 'full', username, password }),
+      body: JSON.stringify({ grant_type: 'password', username, password }),
     })
     .then(parseResponse)
     .then(data => resolve(normalizeToken(data)))
