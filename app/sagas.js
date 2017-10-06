@@ -1,80 +1,53 @@
+import { call, put, take, select, fork, cancel } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
 import constants from './constants';
 import actions from './actions';
 import api from './api';
-import { call, put, take, race, select } from 'redux-saga/effects';
-import { delay } from 'redux-saga';
 
-export const getConfig = state => state.config;
 export const getAuth = state => state.auth;
 
-export function* passwordAuthorize({ oldRefreshToken, username, password }) {
-  try {
-    const { apiUrl, clientId } = yield select(getConfig);
-    const { token, refreshToken, expiresIn } = yield call(api.passwordAuthorize, { refreshToken: oldRefreshToken, username, password, apiUrl, clientId });
-    yield call(api.setAuthTokens, { token, refreshToken });
-    yield put(actions.authorizeSuccess(token));
-    return { token, refreshToken, expiresIn };
-  } catch (error) {
-    // console.log(error);
-    yield call(api.removeAuthTokens);
-    yield put(actions.authorizeFailure(error));
-    return null;
-  }
-}
-
-export function* implicitAuthorize() {
-  try {
-    const { apiUrl, clientId, scope, callBackURL } = yield select(getConfig);
-    const { token } = yield call(api.implicitAuthorize, { apiUrl, clientId, scope, callBackURL });
-    yield call(api.setAuthTokens, { token });
-    yield put(actions.authorizeSuccess(token));
-    return null;
-  } catch (error) {
-    yield call(api.removeAuthTokens);
-    yield put(actions.authorizeFailure(error));
-    return null;
-  }
-}
-
-export function* authorizeLoop({ refreshToken, authType }) {
-  let { username, password } = yield select(getAuth);
-
-  if (refreshToken || authType === constants.PASSWORD_FLOW) {
-    while (true) {
-      const newToken = yield call(passwordAuthorize, { oldRefreshToken: refreshToken, username, password });
-      if (newToken == null) return;
-
-      refreshToken = newToken.refreshToken;
-      // removing username/password from memory
-      username = null;
-      password = null;
-
-      yield race({
-        delay: call(delay, newToken.expiresIn - 600 * 1000),
-        refresh: take(constants.REFRESH_TOKEN),
-      });
+export function* ping({ apiUrl, apiPath, token }) {
+  while (true) {
+    try {
+      yield delay(1000 * 60);
+      yield call(api.ping, { apiUrl, apiPath, token });
+    } catch (error) {
+      yield put(actions.signOut());
     }
-  } else {
-    yield call(implicitAuthorize);
   }
 }
 
 export default function* authentication() {
+  const { apiUrl, apiPath } = yield take(constants.SET_API_PARAMS);
+  let { token } = yield call(api.getAuthTokens);
+
   while (true) {
-    const { refreshToken } = yield call(api.getAuthTokens);
-    let authType = constants.IMPLICIT_FLOW;
+    if (!token) {
+      yield take(constants.START_AUTH);
+      const { login, password } = yield select(getAuth);
 
-    if (!refreshToken) {
-      const payload = yield take(constants.START_AUTH);
-      authType = payload.authType;
-    }
+      try {
+        const res = yield call(api.passwordAuthorize, { login, password, apiUrl, apiPath });
+        token = res.token;
+        yield call(api.setAuthTokens, { token });
+        yield put(actions.authorizeSuccess(token));
+        const pingSaga = yield fork(ping, { apiUrl, apiPath, token });
 
-    const { signOutAction } = yield race({
-      signOutAction: take(constants.SIGN_OUT),
-      authLoop: call(authorizeLoop, { refreshToken, authType }),
-    });
+        yield take(constants.SIGN_OUT);
+        yield cancel(pingSaga);
+        token = null;
+        yield call(api.removeAuthTokens);
+      } catch (error) {
+        yield call(api.removeAuthTokens);
+        yield put(actions.authorizeFailure(error));
+      }
+    } else {
+      yield put(actions.authorizeSuccess(token));
+      const pingSaga = yield fork(ping, { apiUrl, apiPath, token });
 
-    if (signOutAction) {
+      yield take(constants.SIGN_OUT);
+      yield cancel(pingSaga);
+      token = null;
       yield call(api.removeAuthTokens);
     }
   }
