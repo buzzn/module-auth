@@ -4,20 +4,20 @@ import actions from '../actions';
 import constants from '../constants';
 
 const PasswordSignIn = (props) => {
-  const { dispatch, username, password } = props;
+  const { dispatch, login, password } = props;
 
   return (
     <div>
-      <input value={username} onChange={(event) => dispatch(actions.setUsername(event.target.value))} type="text" />
+      <input value={login} onChange={(event) => dispatch(actions.setLogin(event.target.value))} type="text" />
       <input value={password} onChange={(event) => dispatch(actions.setPassword(event.target.value))} type="password" />
-      <button onClick={() => dispatch(actions.startAuth(constants.PASSWORD_FLOW))}>Sign in</button>
+      <button onClick={() => dispatch(actions.startAuth())}>Sign in</button>
     </div>
   );
 };
 
 function mapStateToProps(state) {
   return {
-    username: state.auth.username,
+    login: state.auth.login,
     password: state.auth.password,
   };
 }
