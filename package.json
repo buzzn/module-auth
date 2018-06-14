@@ -8,8 +8,10 @@
     "test-watch": "jest --coverage --watch",
     "dev-server": "webpack-dev-server --progress --inline --hot --port=2999",
     "build": "rimraf build && webpack --config ./webpack.production.config.js --progress --profile --colors",
-    "postinstall": "npx babel app/ -d dist/"
+    "compat": "npx babel app/ -d dist/",
+    "add-dist": "git add ."
   },
+  "pre-commit": ["compat", "add-dist"],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -58,6 +60,7 @@
     "postcss": "^6.0.13",
     "postcss-flexbugs-fixes": "^3.2.0",
     "postcss-loader": "^2.0.6",
+    "pre-commit": "^1.2.2",
     "precss": "^2.0.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
