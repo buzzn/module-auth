@@ -13,6 +13,12 @@ var _actions = _interopRequireDefault(require("../actions"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+(function () {
+  var enterModule = require('react-hot-loader').enterModule;
+
+  enterModule && enterModule(module);
+})();
+
 var SignOutButton = function SignOutButton(props) {
   var dispatch = props.dispatch;
   return _react.default.createElement("button", {
@@ -28,14 +34,18 @@ var _default2 = _default;
 exports.default = _default2;
 ;
 
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+(function () {
+  var reactHotLoader = require('react-hot-loader').default;
+
+  var leaveModule = require('react-hot-loader').leaveModule;
+
+  if (!reactHotLoader) {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(SignOutButton, "SignOutButton", "app/components/sign_out_button.js");
-
-  __REACT_HOT_LOADER__.register(_default, "default", "app/components/sign_out_button.js");
-}();
+  reactHotLoader.register(SignOutButton, "SignOutButton", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/components/sign_out_button.js");
+  reactHotLoader.register(_default, "default", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/components/sign_out_button.js");
+  leaveModule(module);
+})();
 
 ;

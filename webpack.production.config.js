@@ -6,12 +6,7 @@ const StatsPlugin = require('stats-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: [
-      'babel-polyfill',
-      'bootstrap-loader',
-      'whatwg-fetch',
-      './app/index.js',
-    ],
+    app: ['@babel/polyfill', 'bootstrap-loader', 'whatwg-fetch', './app/index.js'],
   },
   output: {
     path: path.resolve(__dirname, 'build/public/assets'),
@@ -24,26 +19,14 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'stage-0', 'react'],
-        },
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader',
-        ],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
-        ],
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
       },
       {
         test: /\.woff?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -88,7 +71,10 @@ module.exports = {
       filename: '../index.html',
     }),
     // TODO: fix it after #265
-    new ExtractTextPlugin({ filename: 'bundle-[hash].min.css', allChunks: true }),
+    new ExtractTextPlugin({
+      filename: 'bundle-[hash].min.css',
+      allChunks: true,
+    }),
     new webpack.optimize.UglifyJsPlugin({
       comments: false,
       sourceMap: false,

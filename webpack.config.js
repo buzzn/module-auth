@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   devtool: 'sourcemap',
   entry: [
-    'babel-polyfill',
+    '@babel/polyfill',
     'bootstrap-loader',
     'react-hot-loader/patch',
     'webpack/hot/only-dev-server',
@@ -23,10 +23,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
-        query: {
-          presets: [['es2015', { modules: false }], 'stage-0', 'react'],
-          plugins: ['react-hot-loader/babel'],
-        },
       },
       {
         test: /\.css$/,

@@ -9,8 +9,6 @@ exports.getAuth = void 0;
 
 var _effects = require("redux-saga/effects");
 
-var _reduxSaga = require("redux-saga");
-
 var _constants = _interopRequireDefault(require("./constants"));
 
 var _actions = _interopRequireDefault(require("./actions"));
@@ -18,6 +16,12 @@ var _actions = _interopRequireDefault(require("./actions"));
 var _api = _interopRequireDefault(require("./api"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(function () {
+  var enterModule = require('react-hot-loader').enterModule;
+
+  enterModule && enterModule(module);
+})();
 
 var _marked =
 /*#__PURE__*/
@@ -56,7 +60,7 @@ function ping(_ref) {
 
         case 5:
           _context.next = 7;
-          return (0, _reduxSaga.delay)(1000 * 60);
+          return (0, _effects.delay)(1000 * 60);
 
         case 7:
           _context.next = 13;
@@ -224,16 +228,19 @@ function authentication() {
 
 ;
 
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+(function () {
+  var reactHotLoader = require('react-hot-loader').default;
+
+  var leaveModule = require('react-hot-loader').leaveModule;
+
+  if (!reactHotLoader) {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(getAuth, "getAuth", "app/sagas.js");
-
-  __REACT_HOT_LOADER__.register(ping, "ping", "app/sagas.js");
-
-  __REACT_HOT_LOADER__.register(authentication, "authentication", "app/sagas.js");
-}();
+  reactHotLoader.register(getAuth, "getAuth", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/sagas.js");
+  reactHotLoader.register(ping, "ping", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/sagas.js");
+  reactHotLoader.register(authentication, "authentication", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/sagas.js");
+  leaveModule(module);
+})();
 
 ;

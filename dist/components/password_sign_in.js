@@ -15,6 +15,12 @@ var _constants = _interopRequireDefault(require("../constants"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+(function () {
+  var enterModule = require('react-hot-loader').enterModule;
+
+  enterModule && enterModule(module);
+})();
+
 var PasswordSignIn = function PasswordSignIn(props) {
   var dispatch = props.dispatch,
       login = props.login,
@@ -51,16 +57,19 @@ var _default2 = _default;
 exports.default = _default2;
 ;
 
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+(function () {
+  var reactHotLoader = require('react-hot-loader').default;
+
+  var leaveModule = require('react-hot-loader').leaveModule;
+
+  if (!reactHotLoader) {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(PasswordSignIn, "PasswordSignIn", "app/components/password_sign_in.js");
-
-  __REACT_HOT_LOADER__.register(mapStateToProps, "mapStateToProps", "app/components/password_sign_in.js");
-
-  __REACT_HOT_LOADER__.register(_default, "default", "app/components/password_sign_in.js");
-}();
+  reactHotLoader.register(PasswordSignIn, "PasswordSignIn", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/components/password_sign_in.js");
+  reactHotLoader.register(mapStateToProps, "mapStateToProps", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/components/password_sign_in.js");
+  reactHotLoader.register(_default, "default", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/components/password_sign_in.js");
+  leaveModule(module);
+})();
 
 ;

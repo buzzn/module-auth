@@ -68,12 +68,3 @@ describe('auth actions', function () {
     expect(_actions.default.signOut()).toEqual(expectedAction);
   });
 });
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-}();
-
-;

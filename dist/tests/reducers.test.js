@@ -6,7 +6,9 @@ var _constants = _interopRequireDefault(require("../constants"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 describe('auth reducers', function () {
   var initialState = {
@@ -22,7 +24,7 @@ describe('auth reducers', function () {
       type: _constants.default.SET_LOGIN,
       login: login
     };
-    expect((0, _reducers.default)(undefined, action)).toEqual(_extends({}, initialState, {
+    expect((0, _reducers.default)(undefined, action)).toEqual(_objectSpread({}, initialState, {
       login: login
     }));
   });
@@ -32,7 +34,7 @@ describe('auth reducers', function () {
       type: _constants.default.SET_PASSWORD,
       password: password
     };
-    expect((0, _reducers.default)(undefined, action)).toEqual(_extends({}, initialState, {
+    expect((0, _reducers.default)(undefined, action)).toEqual(_objectSpread({}, initialState, {
       password: password
     }));
   });
@@ -42,7 +44,7 @@ describe('auth reducers', function () {
       type: _constants.default.SIGN_IN,
       token: token
     };
-    expect((0, _reducers.default)(undefined, action)).toEqual(_extends({}, initialState, {
+    expect((0, _reducers.default)(undefined, action)).toEqual(_objectSpread({}, initialState, {
       token: token,
       error: null
     }));
@@ -53,18 +55,9 @@ describe('auth reducers', function () {
       type: _constants.default.SIGN_OUT,
       error: error
     };
-    expect((0, _reducers.default)(undefined, action)).toEqual(_extends({}, initialState, {
+    expect((0, _reducers.default)(undefined, action)).toEqual(_objectSpread({}, initialState, {
       token: null,
       error: error
     }));
   });
 });
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-}();
-
-;

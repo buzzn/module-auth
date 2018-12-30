@@ -4,6 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+(function () {
+  var enterModule = require('react-hot-loader').enterModule;
+
+  enterModule && enterModule(module);
+})();
+
 var _default = {
   SET_API_PARAMS: 'buzzn_auth/SET_API_PARAMS',
   SET_LOGIN: 'buzzn_auth/SET_LOGIN',
@@ -17,12 +24,17 @@ var _default2 = _default;
 exports.default = _default2;
 ;
 
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+(function () {
+  var reactHotLoader = require('react-hot-loader').default;
+
+  var leaveModule = require('react-hot-loader').leaveModule;
+
+  if (!reactHotLoader) {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(_default, "default", "app/constants.js");
-}();
+  reactHotLoader.register(_default, "default", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/constants.js");
+  leaveModule(module);
+})();
 
 ;

@@ -7,6 +7,12 @@ exports.default = void 0;
 
 require("whatwg-fetch");
 
+(function () {
+  var enterModule = require('react-hot-loader').enterModule;
+
+  enterModule && enterModule(module);
+})();
+
 function parseResponse(response) {
   if (response.status === 200) {
     return {
@@ -63,16 +69,19 @@ var _default2 = _default;
 exports.default = _default2;
 ;
 
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+(function () {
+  var reactHotLoader = require('react-hot-loader').default;
+
+  var leaveModule = require('react-hot-loader').leaveModule;
+
+  if (!reactHotLoader) {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(parseResponse, "parseResponse", "app/api.js");
-
-  __REACT_HOT_LOADER__.register(prepareHeaders, "prepareHeaders", "app/api.js");
-
-  __REACT_HOT_LOADER__.register(_default, "default", "app/api.js");
-}();
+  reactHotLoader.register(parseResponse, "parseResponse", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/api.js");
+  reactHotLoader.register(prepareHeaders, "prepareHeaders", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/api.js");
+  reactHotLoader.register(_default, "default", "/Users/dongeolog/node_apps/buzzn/modules/auth/app/api.js");
+  leaveModule(module);
+})();
 
 ;
